@@ -1,0 +1,59 @@
+pipeline {
+    agent any
+    
+    environment {
+        KUBECONFIG = '/path/to/your/kubeconfig'
+    }
+    
+    stages {
+        stage('Setup') {
+            steps {
+                sh 'terraform init'
+            }
+        }
+        
+        stage('Create KinD Cluster') {
+            steps {
+                sh 'terraform apply -auto-approve -target=null_resource.create_kind_cluster'
+            }
+        }
+        
+        stage('Wait for Cluster') {
+            steps {
+                sh 'terraform apply -auto-approve -target=null_resource.wait_for_cluster'
+            }
+        }
+        
+        stage('Get Cluster Credentials') {
+            steps {
+                sh 'terraform apply -auto-approve -target=null_resource.get_cluster_credentials'
+            }
+        }
+        
+        stage('Deploy Application') {
+            steps {
+                container('helm') {
+                    sh 'helm install my-app ./home/bernardo/.cache/helm/repository'
+                }
+            }
+        }
+        
+        stage('Run Tests') {
+            steps {
+                
+            }
+        }
+        
+        stage('Destroy KinD Cluster') {
+            steps {
+                sh 'terraform destroy -auto-approve'
+            }
+        }
+    }
+    
+    post {
+        always {
+            sh 'rm kubeconfig.yaml' 
+        }
+    }
+}

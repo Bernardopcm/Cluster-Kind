@@ -15,7 +15,7 @@ provider "null" {}
 
 provider "helm" {
   kubernetes {
-    config_path = "/path/to/your/kubeconfig"
+    config_path = "~/.kube/config"
   }
 }
 
@@ -42,7 +42,6 @@ resource "null_resource" "get_cluster_credentials" {
   }
 }
 
-# Provisionamento do repositório Helm usando o comando helm repo add
 resource "null_resource" "add_helm_repo" {
   depends_on = [null_resource.get_cluster_credentials]
 

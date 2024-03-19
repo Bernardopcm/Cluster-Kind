@@ -41,7 +41,7 @@ pipeline {
         stage('Run Tests') {
            steps {
         script {
-            sh 'helm install my-app ./home/bernardo/.cache/helm/repository'
+            sh 'helm install my-app /home/bernardo/.cache/helm/repository'
             sh 'kubectl wait --for=condition=available deployment/my-app --timeout=60s'
         }
     }

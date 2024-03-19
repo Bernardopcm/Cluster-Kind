@@ -33,7 +33,7 @@ pipeline {
         stage('Deploy Application') {
             steps {
                 container('helm') {
-                    sh 'helm install my-app /home/bernardo/.cache/helm/repository'
+                    sh 'helm install my-app /home/bernardo/.cache/helm/repository/my-helm-repo-index.yaml'
                 }
             }
         }
@@ -41,10 +41,10 @@ pipeline {
         stage('Run Tests') {
            steps {
         script {
-            sh 'helm install my-app /home/bernardo/.cache/helm/repository'
+            sh 'helm install my-app /home/bernardo/.cache/helm/repository/my-helm-repo-index.yaml'
             sh 'kubectl wait --for=condition=available deployment/my-app --timeout=60s'
-        }
-    }
+                }
+            }
         }
         
         stage('Destroy KinD Cluster') {

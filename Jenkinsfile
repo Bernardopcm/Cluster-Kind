@@ -33,7 +33,7 @@ pipeline {
         stage('Deploy Application') {
             steps {
                 container('helm') {
-                    sh 'helm install my-app ./home/bernardo/.cache/helm/repository'
+                    sh 'helm install my-app /home/bernardo/.cache/helm/repository'
                 }
             }
         }
@@ -53,7 +53,7 @@ pipeline {
             }
         }
     }
-    
+
     
     post {
         always {

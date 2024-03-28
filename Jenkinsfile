@@ -14,19 +14,19 @@ pipeline {
         
         stage('Create KinD Cluster') {
             steps {
-                sh 'terraform apply -auto-approve -target=null_resource.create_kind_cluster'
+                sh 'terraform apply -no-color -auto-approve -target=null_resource.create_kind_cluster'
             }
         }
         
         stage('Wait for Cluster') {
             steps {
-                sh 'terraform apply -auto-approve -target=null_resource.wait_for_cluster'
+                sh 'terraform apply -no-color -auto-approve -target=null_resource.wait_for_cluster'
             }
         }
         
         stage('Get Cluster Credentials') {
             steps {
-                sh 'terraform apply -auto-approve -target=null_resource.get_cluster_credentials'
+                sh 'terraform apply -no-color -auto-approve -target=null_resource.get_cluster_credentials'
             }
         }
         

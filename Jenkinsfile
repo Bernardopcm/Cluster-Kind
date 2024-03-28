@@ -32,7 +32,7 @@ pipeline {
         
         stage('Deploy Application') {
             steps {
-                container('helm') {
+                container('busybox') {
                     sh 'helm install my-app /home/bernardo/.cache/helm/repository/my-helm-repo-index.yaml'
                 }
             }

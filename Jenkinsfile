@@ -33,7 +33,7 @@ pipeline {
         stage('Deploy Application') {
             steps {
                 container('busybox') {
-                    sh 'helm install my-app /home/bernardo/.cache/helm/repository/my-helm-repo-index.yaml'
+                    sh 'helm install my-app /home/bernardo/.cache/helm/repository/meu-chart.tar.gz'
                 }
             }
         }
@@ -41,7 +41,7 @@ pipeline {
         stage('Run Tests') {
            steps {
         script {
-            sh 'helm install my-app /home/bernardo/.cache/helm/repository/my-helm-repo-index.yaml'
+            sh 'helm install my-app /home/bernardo/.cache/helm/repository/meu-chart.tar.gz'
             sh 'kubectl wait --for=condition=available deployment/my-app --timeout=60s'
                 }
             }
